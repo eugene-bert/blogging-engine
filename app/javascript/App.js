@@ -1,6 +1,8 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./pages/Home/Home";
+import 'antd/dist/antd.css';
+
 
 const App = () => {
   return (
