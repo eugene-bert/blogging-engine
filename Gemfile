@@ -24,6 +24,9 @@ gem 'jbuilder', '~> 2.7'
 #
 gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 
+gem 'fast_jsonapi'
+gem 'jwt'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
