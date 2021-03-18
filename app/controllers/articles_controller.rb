@@ -1,15 +1,11 @@
 class ArticlesController < ApplicationController
-
-  def index
-    @articles = Article.where(user_id: current_user.id)
-  end
-
   def create
-    Article.new(title: params[:title], body: params[:body], user: current_user).save
+    Article.new(title: params[:title], body: params[:body], user: params[:userId]).save
   end
 
   def articles_list
-    @articles = Article.all
+    @articles = Article.where(user_id: params[:userId])
+    logger.info(params)
 
     render json: @articles
   end
