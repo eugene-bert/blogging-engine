@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
+import { useApplicationContext } from "../../application.context";
 import axios from "axios";
 
 const layout = {
@@ -19,6 +20,7 @@ const tailLayout = {
 
 const LoginForm = () => {
   const [loginForm, setLoginForm] = useState(true);
+  const { dispatch } = useApplicationContext();
   const onFinish = (values) => {
     if (loginForm) {
       axios
@@ -30,6 +32,9 @@ const LoginForm = () => {
           console.log(data);
           localStorage.setItem("token", data.data.token);
           localStorage.setItem("exp", data.data.exp);
+          if (data.data.token) {
+            dispatch({ type: "LOG_IN" });
+          }
         });
     } else {
       axios
@@ -41,6 +46,9 @@ const LoginForm = () => {
           console.log(data);
           localStorage.setItem("token", data.data.token);
           localStorage.setItem("exp", data.data.exp);
+          if (data.data.token) {
+            dispatch({ type: "LOG_IN" });
+          }
         });
     }
     console.log("Success:", values);
