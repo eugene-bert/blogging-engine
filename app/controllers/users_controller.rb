@@ -1,22 +1,10 @@
 class UsersController < ApplicationController
-  # skip_before_action :authorized, only: [:new, :create]
-  # def new
-  #   @user = User.new
-  # end
-  # def create
-  #   @user = User.create(params.require(:user).permit(:username,
-  #                                                    :password))
-  #   session[:user_id] = @user.id
-  #   redirect_to '/welcome'
-  # end
-  #
-  # login api request
   def login
     @payload = {username: params[:username], password: params[:password]}
-    @user = User.find_by(username: params[:username])
+    user = User.find_by(username: params[:username])
     token = JsonWebToken.encode(@payload)
 
-    if @user
+    if user && user.authenticate(params[:password])
       render json: {token: token, exp: Time.now.to_i + 4 * 3600}
 
     else
