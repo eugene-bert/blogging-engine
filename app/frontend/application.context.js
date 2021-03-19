@@ -3,7 +3,8 @@ import React from "react";
 export const ApplicationContext = React.createContext();
 
 const applicationState = {
-  isLoggedIn: localStorage.getItem('token') && localStorage.getItem('token') !== 'undefined'
+  isLoggedIn: localStorage.getItem('token') && localStorage.getItem('token') !== 'undefined',
+  articles: [],
 }
 
 function ContextReducer(state, action) {
@@ -19,6 +20,12 @@ function ContextReducer(state, action) {
         ...state,
         isLoggedIn: true
       };
+    }
+    case "SET_ARTICLES": {
+      return {
+        ...state,
+        articles: action.payload
+      }
     }
     default:
       return state;
@@ -39,7 +46,7 @@ export function useApplicationContext() {
     );
   }
   const [state, dispatch] = context;
-  // const increment = () => dispatch({ type: "INCREMENT" });
+
   return {
     state,
     dispatch,
