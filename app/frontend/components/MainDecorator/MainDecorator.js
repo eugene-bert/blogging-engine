@@ -1,14 +1,52 @@
-import React from "react";
-import { Input, Layout, Menu, Button, Form } from "antd";
-import { BookOutlined, LogoutOutlined, ReadOutlined } from "@ant-design/icons";
+import React, { Fragment } from "react";
+import { Layout, Menu, Button } from "antd";
+import { BookOutlined, UserOutlined, HddOutlined } from "@ant-design/icons";
 import { useApplicationContext } from "../../application.context";
 import { CreateArticle } from "../CreateArticle/CreateArticle";
+import LogInModal from "../LogInModal/LogInModal";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
+import SectionsDecorator from "../SectionsDecorator/SectionsDecorator";
 import "./MainDecorator.scss";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
+
+const LogOutButton = () => {
+  const { dispatch } = useApplicationContext();
+
+  return (
+    <Button
+      type="primary"
+      className="login-button"
+      onClick={() => {
+        localStorage.clear();
+        dispatch({ type: "LOG_OUT" });
+      }}
+    >
+      Log out
+    </Button>
+  );
+};
 
 const MainDecorator = () => {
-  const { dispatch } = useApplicationContext();
+  const { state } = useApplicationContext();
+  let location = useLocation();
+
+  const getDefaultSelectedKey = () => {
+    switch (location.pathname) {
+      case "/":
+        return "1";
+      case "/blog":
+        return "1";
+      case "/profile":
+        return "2";
+      case "/myArticles":
+        return "3";
+      default:
+        return "1";
+    }
+  };
+
   return (
     <div className="main-decorator">
       <Layout>
@@ -22,26 +60,33 @@ const MainDecorator = () => {
             console.log(collapsed, type);
           }}
         >
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+          <Menu
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={[getDefaultSelectedKey()]}
+          >
             <div className="main-decorator__logo">
               <img src="/img/logo.png" alt="" />
             </div>
-            <Menu.Item key="1" icon={<BookOutlined />}>
-              Blog
-            </Menu.Item>
-            <Menu.Item key="2" icon={<ReadOutlined />}>
-              Articles
-            </Menu.Item>
-            <Menu.Item
-              key="3"
-              icon={<LogoutOutlined />}
-              onClick={() => {
-                localStorage.clear();
-                dispatch({ type: "LOG_OUT" });
-              }}
-            >
-              Sign out
-            </Menu.Item>
+            {state.isLoggedIn && (
+              <div className="create-button">
+                <CreateArticle />
+              </div>
+            )}
+            {state.isLoggedIn && (
+              <Fragment>
+                <Menu.Item key="1" icon={<BookOutlined />}>
+                  <Link to="/blog">Blog</Link>
+                </Menu.Item>
+                <Menu.Item isSelected={true} key="2" icon={<UserOutlined />}>
+                  <Link to="/profile">Profile</Link>
+                </Menu.Item>
+                <Menu.Item isSelected={true} key="3" icon={<HddOutlined />}>
+                  <Link to="/myArticles">My articles</Link>
+                </Menu.Item>
+              </Fragment>
+            )}
+            {!state.isLoggedIn ? <LogInModal /> : <LogOutButton />}
           </Menu>
         </Sider>
         <Layout>
@@ -56,7 +101,7 @@ const MainDecorator = () => {
                     src="https://i.giphy.com/BferOKonYOspm28AiB.gif"
                     alt=""
                   />
-                  <CreateArticle />
+                  {state.isLoggedIn ? <CreateArticle /> : <LogInModal />}
                 </div>
                 <div className="create-article__title">
                   <h1>WHY DO WE NEED TO BE CREATIVE?</h1>
@@ -74,7 +119,7 @@ const MainDecorator = () => {
                   </p>
                 </div>
               </div>
-              <div className="main-decorator__articles"></div>
+              <SectionsDecorator />
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
