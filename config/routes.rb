@@ -1,3 +1,11 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root 'pages#index'
+
+  post 'api/v1/login', to: 'users#login'
+  post 'api/v1/register', to: 'users#register'
+  post 'api/v1/token_info', to: 'users#token_info'
+  post 'api/v1/create_article', to: 'articles#create'
+  get 'api/v1/login/articles_list', to: 'articles#articles_list'
+
+  match '*path', to: 'pages#index', via: :all
 end

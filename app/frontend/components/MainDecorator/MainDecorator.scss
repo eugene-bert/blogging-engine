@@ -1,0 +1,88 @@
+.main-decorator {
+  section {
+    height: 100vh;
+
+    aside {
+      width: 250px !important;
+      max-width: 250px !important;
+      min-width: 250px !important;
+
+
+      .login-button {
+        position: absolute;
+        bottom: 3%;
+        left: 25%;
+        width: 50%;
+      }
+    }
+  }
+  .create-button {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin-bottom: 25px;
+  }
+  .ant-layout {
+    max-height: 100vh;
+    background: #fff3e0;
+    overflow: auto;
+  }
+  .ant-layout-content {
+    margin: 80px !important;
+    margin-top: 15px !important;
+    min-height: auto;
+  }
+  .ant-layout-header {
+    background: #FFF;
+  }
+  .create-article {
+    display: flex;
+    justify-content: center;
+
+    &__title {
+      margin: 25px;
+
+      h1 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+    }
+
+    &__section {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: fit-content;
+
+      button {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        font-weight: bold;
+        font-size: 33px;
+        background: none;
+        border: none;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+  }
+  &__logo {
+    display: flex;
+    justify-content: center;
+    background-color: #FFF;
+    margin-bottom: 25px;
+
+    img {
+      height: 175px;
+    }
+  }
+  &__articles {
+    margin-top: 25px;
+  }
+}

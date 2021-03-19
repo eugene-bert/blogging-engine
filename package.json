@@ -2,14 +2,26 @@
   "name": "blogging-engine",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "@babel/preset-react": "^7.12.13",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
+    "antd": "^4.14.0",
+    "axios": "^0.21.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-uuid": "^1.0.2",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
+    "prettier": "^2.2.1",
     "webpack-dev-server": "^3.11.2"
   }
 }
