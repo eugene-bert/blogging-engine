@@ -1,6 +1,17 @@
 class ArticlesController < ApplicationController
+
   def create
-    Article.new(title: params[:title], body: params[:body], user: params[:userId]).save
+    @article = Article.create(title: params[:title],
+                              body: params[:body],
+                              user_id: params[:user_id])
+
+    if @article.valid?
+      render json: @article
+    else
+      @payload = { object: @article, errors: @article.errors }
+      render json: @payload
+    end
+
   end
 
   def articles_list
