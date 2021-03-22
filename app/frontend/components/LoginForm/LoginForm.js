@@ -100,10 +100,9 @@ const LoginForm = () => {
           <Form.Item
             label="First name"
             name="first_name"
-            required={true}
             rules={[
               {
-                required: false,
+                required: !loginForm && true,
                 message: "Please input your first name!",
               },
             ]}
@@ -116,7 +115,7 @@ const LoginForm = () => {
             required={true}
             rules={[
               {
-                required: false,
+                required: !loginForm && true,
                 message: "Please input last name!",
               },
             ]}
