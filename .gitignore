@@ -7,6 +7,8 @@
 # Ignore bundler config.
 /.bundle
 /.idea/*
+.idea/workspace.xml
+
 
 # Ignore all logfiles and tempfiles.
 /log/*
