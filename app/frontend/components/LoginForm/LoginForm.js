@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import { Form, Input, Button  } from "antd";
+import { Form, Input, Button } from "antd";
 import { useApplicationContext } from "../../application.context";
 import axios from "axios";
 
@@ -25,7 +25,7 @@ const LoginForm = () => {
     if (loginForm) {
       axios
         .post("/api/v1/login", {
-          username: values.username,
+          user_name: values.user_name,
           password: values.password,
         })
         .then((data) => {
@@ -39,8 +39,10 @@ const LoginForm = () => {
     } else {
       axios
         .post("/api/v1/register", {
-          username: values.username,
+          user_name: values.user_name,
           password: values.password,
+          first_name: values.first_name,
+          last_name: values.last_name
         })
         .then((data) => {
           console.log(data);
@@ -70,7 +72,7 @@ const LoginForm = () => {
     >
       <Form.Item
         label="Username"
-        name="username"
+        name="user_name"
         rules={[
           {
             required: true,
@@ -93,6 +95,36 @@ const LoginForm = () => {
       >
         <Input.Password />
       </Form.Item>
+      {!loginForm && (
+        <Fragment>
+          <Form.Item
+            label="First name"
+            name="first_name"
+            required={true}
+            rules={[
+              {
+                required: false,
+                message: "Please input your first name!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Last name"
+            name="last_name"
+            required={true}
+            rules={[
+              {
+                required: false,
+                message: "Please input last name!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Fragment>
+      )}
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           {loginForm ? (

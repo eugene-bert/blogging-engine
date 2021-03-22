@@ -1,11 +1,11 @@
 class ArticlesController < ApplicationController
   def create
-    @user_id = JsonWebToken.decode(request.headers[:Bearer])[:id]
-
-    @article = Article.new(title: params[:title], body: params[:body], user_id: @user_id).save
-
-    if (@article)
+    @article = Article.create(title: params[:title], body: params[:body], user_id: JsonWebToken.decode(request.headers[:Bearer])[:id])
+    if @article.valid?
       render json: @article
+    else
+      @payload = { object: @article, errors: @article.errors }
+      render json: @payload, status: 404
     end
   end
 
