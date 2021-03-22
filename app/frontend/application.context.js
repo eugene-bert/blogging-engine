@@ -12,7 +12,8 @@ function ContextReducer(state, action) {
     case "LOG_OUT": {
       return {
         ...state,
-        isLoggedIn: false
+        isLoggedIn: false,
+        articles: []
       };
     }
     case "LOG_IN": {

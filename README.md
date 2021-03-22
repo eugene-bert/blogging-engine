@@ -40,3 +40,8 @@ Frontend
 ```  
 $ ./bin/webpack-dev-server
 ```
+Other useful info commands: 
+
+```  
+$ rake db:reset
+```

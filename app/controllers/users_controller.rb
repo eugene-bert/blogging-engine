@@ -1,29 +1,32 @@
 class UsersController < ApplicationController
   def login
-    user = User.find_by(username: params[:username])
-    token = JsonWebToken.encode(username: params[:username], password: params[:password], id: user[:id] )
+    user = User.find_by(user_name: params[:user_name])
+    token = JsonWebToken.encode(user_name: params[:user_name], id: user.id )
 
-    if user && user.authenticate(params[:password])
-      render json: { token: token, exp: Time.now.to_i + 4 * 3600 }
+    if user&.authenticate(params[:password])
+      render json: { token: token }
 
     else
-      render json: { error: 404, message: 'not found' }
+      render json: { message: 'unauthorized' }, status: :unauthorized
     end
   end
 
   # register api request
   def register
-    @user = User.create(username: params[:username], password: params[:password],
+    @user = User.create(user_name: params[:user_name],
+                        password: params[:password],
                         first_name: params[:first_name],
                         last_name: params[:last_name])
 
-    if @user.valid?
-      @payload = { username: params[:username], password: params[:password] }
+    if @user.valid? && @user.id
+      @payload = { user_name: @user.user_name, id: @user.id }
       token = JsonWebToken.encode(@payload)
 
-      render json: { token: token, exp: Time.now.to_i + 4 * 3600 }
+
+      logger.info(JsonWebToken.decode(token))
+      render json: { token: token }
     else
-      @payload = { username: params[:username], errors: @user.errors }
+      @payload = { user_name: params[:user_name], errors: @user.errors }
       render json: @payload
     end
   end
