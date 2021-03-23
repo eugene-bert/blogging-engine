@@ -1,7 +1,24 @@
 class ArticlesController < ApplicationController
+
+  before_action :resolve_token, only: [:create, :update, :destroy]
+
+  def resolve_token
+    begin
+      @token_data = JsonWebToken.decode(request.headers[:Bearer])
+    rescue NoMethodError
+      nil
+    end
+
+    if @token_data.nil?
+      head :unauthorized
+    else
+      @token_data
+    end
+  end
+
   def create
     @article = Article.create(title: params[:title], body: params[:body],
-                              user_id: JsonWebToken.decode(request.headers[:Bearer])[:id])
+                              user_id: @token_data[:id])
     if @article.valid?
       render json: @article
     else
@@ -17,7 +34,7 @@ class ArticlesController < ApplicationController
     render json: @articles, status: 200
   end
 
-  def show()
+  def show
     @article = Article.joins(:user)
                       .select('articles.*', 'users.user_name',
                               'users.first_name', 'users.last_name')
@@ -31,7 +48,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @article = Article.where(id: params[:id], user_id: JsonWebToken.decode(request.headers[:Bearer])[:id]).first
+    @article = Article.where(id: params[:id], user_id: @token_data[:id]).first
     @article.update(title: params[:title].nil? ? @article.title : params[:title],
                     body: params[:body].nil? ? @article.body : params[:body],
                     is_private: params[:is_private].nil? ? @article.is_private : params[:is_private],
@@ -55,24 +72,4 @@ class ArticlesController < ApplicationController
 
   end
 
-  def articles_list
-    @user_id = JsonWebToken.decode(request.headers[:Bearer])[:id]
-    @articles = Article.where(user_id: @user_id)
-    puts @articles
-    render json: @articles
-  end
-
-  def edit_article
-    @article = Article.where(id: params[:id], user_id: JsonWebToken.decode(request.headers[:Bearer])[:id]).first
-    @article.update(title: params[:title].nil? ? @article.title : params[:title],
-                    body: params[:body].nil? ? @article.body : params[:body],
-                    is_private: params[:is_private].nil? ? @article.is_private : params[:is_private],
-                    is_archived: params[:is_archived].nil? ? @article.is_archived : params[:is_archived])
-    if @article.valid?
-      render json: @article
-    else
-      @payload = { object: @article, errors: @article.errors }
-      render json: @payload, status: 200
-    end
-  end
 end
