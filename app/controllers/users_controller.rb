@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   def login
-    user = User.find_by(user_name: params[:user_name])
-    token = JsonWebToken.encode(user_name: params[:user_name], id: user.id )
+    @user = User.find_by(user_name: params[:user_name])
 
-    if user&.authenticate(params[:password])
+    if @user&.authenticate(params[:password])
+      token = JsonWebToken.encode(user_name: params[:user_name], id: @user.id)
       render json: { token: token }
 
     else
@@ -21,7 +21,6 @@ class UsersController < ApplicationController
     if @user.valid? && @user.id
       @payload = { user_name: @user.user_name, id: @user.id }
       token = JsonWebToken.encode(@payload)
-
 
       logger.info(JsonWebToken.decode(token))
       render json: { token: token }
