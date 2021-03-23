@@ -1,7 +1,8 @@
 import React, { useState, Fragment } from "react";
 import { Form, Input, Button } from "antd";
 import { useApplicationContext } from "../../application.context";
-import axios from "axios";
+import { decodeToken } from "react-jwt";
+import api from "../../api";
 
 const layout = {
   labelCol: {
@@ -23,37 +24,35 @@ const LoginForm = () => {
   const { dispatch } = useApplicationContext();
   const onFinish = (values) => {
     if (loginForm) {
-      axios
-        .post("/api/v1/login", {
+      return api
+        .login({
           user_name: values.user_name,
           password: values.password,
         })
         .then((data) => {
-          console.log(data);
-          localStorage.setItem("token", data.data.token);
-          localStorage.setItem("exp", data.data.exp);
           if (data.data.token) {
-            dispatch({ type: "LOG_IN" });
-          }
-        });
-    } else {
-      axios
-        .post("/api/v1/register", {
-          user_name: values.user_name,
-          password: values.password,
-          first_name: values.first_name,
-          last_name: values.last_name
-        })
-        .then((data) => {
-          console.log(data);
-          localStorage.setItem("token", data.data.token);
-          localStorage.setItem("exp", data.data.exp);
-          if (data.data.token) {
-            dispatch({ type: "LOG_IN" });
+            localStorage.setItem("token", data.data.token);
+            dispatch({
+              type: "LOG_IN",
+            });
           }
         });
     }
-    console.log("Success:", values);
+    return api
+      .register({
+        user_name: values.user_name,
+        password: values.password,
+        first_name: values.first_name,
+        last_name: values.last_name,
+      })
+      .then((data) => {
+        if (data.data.token) {
+          localStorage.setItem("token", data.data.token);
+          dispatch({
+            type: "LOG_IN",
+          });
+        }
+      });
   };
 
   const onFinishFailed = (errorInfo) => {

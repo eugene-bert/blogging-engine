@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import SectionsDecorator from "../SectionsDecorator/SectionsDecorator";
 import "./MainDecorator.scss";
+import api from "../../api";
 
 const { Content, Footer, Sider } = Layout;
 
@@ -29,8 +30,20 @@ const LogOutButton = () => {
 };
 
 const MainDecorator = () => {
-  const { state } = useApplicationContext();
+  const { state, dispatch } = useApplicationContext();
   let location = useLocation();
+
+  React.useEffect(() => {
+    api.getArticles().then((data) => {
+      dispatch({ type: "SET_ALL_ARTICLES", payload: data.data });
+    });
+
+    if (state.isLoggedIn) {
+      api.getUserInfo().then((data) => {
+        dispatch({ type: "SET_USER_INFO", payload: data.data });
+      });
+    }
+  }, [state.isLoggedIn]);
 
   const getDefaultSelectedKey = () => {
     switch (location.pathname) {
@@ -81,9 +94,6 @@ const MainDecorator = () => {
                 <Menu.Item isSelected={true} key="2" icon={<UserOutlined />}>
                   <Link to="/profile">Profile</Link>
                 </Menu.Item>
-                <Menu.Item isSelected={true} key="3" icon={<HddOutlined />}>
-                  <Link to="/myArticles">My articles</Link>
-                </Menu.Item>
               </Fragment>
             )}
             {!state.isLoggedIn ? <LogInModal /> : <LogOutButton />}
@@ -95,30 +105,30 @@ const MainDecorator = () => {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
-              <div className="create-article">
-                <div className="create-article__section">
-                  <img
-                    src="https://i.giphy.com/BferOKonYOspm28AiB.gif"
-                    alt=""
-                  />
-                  {state.isLoggedIn ? <CreateArticle /> : <LogInModal />}
+                <div className="create-article">
+                  <div className="create-article__section">
+                    <img
+                      src="https://i.giphy.com/BferOKonYOspm28AiB.gif"
+                      alt=""
+                    />
+                    {state.isLoggedIn ? <CreateArticle /> : <LogInModal />}
+                  </div>
+                  <div className="create-article__title">
+                    <h1>WHY DO WE NEED TO BE CREATIVE?</h1>
+                    <p>
+                      Creativity is more than drawing a picture or strumming a
+                      guitar. It’s a vital component to our overall well-being.
+                      If we strive to take the right approach to find new ways
+                      to express our creativity it not only will improve our
+                      personal lives but our professional standing as well. The
+                      next time you are in a museum staring at that masterpiece
+                      on the wall, don’t consume yourself with thoughts of “I
+                      wish I could do that.” Instead, focus on and appreciate
+                      what it took to generate such brilliant work, and ask
+                      yourself what it is that you can create.
+                    </p>
+                  </div>
                 </div>
-                <div className="create-article__title">
-                  <h1>WHY DO WE NEED TO BE CREATIVE?</h1>
-                  <p>
-                    Creativity is more than drawing a picture or strumming a
-                    guitar. It’s a vital component to our overall well-being. If
-                    we strive to take the right approach to find new ways to
-                    express our creativity it not only will improve our personal
-                    lives but our professional standing as well. The next time
-                    you are in a museum staring at that masterpiece on the wall,
-                    don’t consume yourself with thoughts of “I wish I could do
-                    that.” Instead, focus on and appreciate what it took to
-                    generate such brilliant work, and ask yourself what it is
-                    that you can create.
-                  </p>
-                </div>
-              </div>
               <SectionsDecorator />
             </div>
           </Content>

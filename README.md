@@ -44,4 +44,5 @@ Other useful info commands:
 
 ```  
 $ rake db:reset
+$ rake db:drop db:create db:migrate
 ```

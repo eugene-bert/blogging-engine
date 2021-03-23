@@ -3,9 +3,12 @@ import React from "react";
 export const ApplicationContext = React.createContext();
 
 const applicationState = {
-  isLoggedIn: localStorage.getItem('token') && localStorage.getItem('token') !== 'undefined',
+  isLoggedIn:
+    localStorage.getItem("token") &&
+    localStorage.getItem("token") !== "undefined",
+  userInfo: {},
   articles: [],
-}
+};
 
 function ContextReducer(state, action) {
   switch (action.type) {
@@ -13,6 +16,7 @@ function ContextReducer(state, action) {
       return {
         ...state,
         isLoggedIn: false,
+        userInfo: {},
         articles: []
       };
     }
@@ -22,11 +26,17 @@ function ContextReducer(state, action) {
         isLoggedIn: true
       };
     }
-    case "SET_ARTICLES": {
+    case "SET_ALL_ARTICLES": {
       return {
         ...state,
-        articles: action.payload
-      }
+        articles: action.payload,
+      };
+    }
+    case "SET_USER_INFO": {
+      return {
+        ...state,
+        userInfo: action.payload,
+      };
     }
     default:
       return state;

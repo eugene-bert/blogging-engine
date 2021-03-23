@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Drawer, Form, Button, Col, Row, Input, Select } from "antd";
-import axios from "axios";
+import { Drawer, Form, Button, Col, Row, Input } from "antd";
 import { useApplicationContext } from "../../application.context";
+import api from "./../../api";
 
 export const CreateArticle = () => {
   const [open, setOpen] = useState(false);
@@ -37,27 +37,15 @@ export const CreateArticle = () => {
             </Button>
             <Button
               onClick={() => {
-                axios
-                  .post(
-                    "/api/v1/create_article",
-                    { title: inputs.title, body: inputs.body },
-                    {
-                      headers: { Bearer: localStorage.getItem("token") },
-                    }
-                  )
+                api
+                  .createArticle({ title: inputs.title, body: inputs.body })
                   .then((data) => {
-                    console.log(data);
                     form.resetFields();
                     setOpen(false);
-                    axios
-                      .get("http://localhost:3000/api/v1/login/articles_list", {
-                        headers: { Bearer: localStorage.getItem("token") },
-                      })
-                      .then((data) => {
-                        dispatch({ type: "SET_ARTICLES", payload: data.data });
-                      });
+                    api.getPrivateArticles().then((data) => {
+                      dispatch({ type: "SET_ARTICLES", payload: data.data });
+                    });
                   });
-                console.log(inputs);
               }}
               type="primary"
             >
