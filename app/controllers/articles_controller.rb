@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
 
   def resolve_token
     begin
-      @token_data = JsonWebToken.decode(request.headers[:Bearer])
+      @token_data = JsonWebToken.decode(bearer_token)
     rescue NoMethodError
       nil
     end

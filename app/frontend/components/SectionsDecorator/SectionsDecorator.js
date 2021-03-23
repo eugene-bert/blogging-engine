@@ -6,7 +6,7 @@ import MyProfile from "../MyProfile/MyProfile";
 import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
 import "./SectionsDecorator.scss";
 
-const TestComponent = () => {
+const RedirectComponent = () => {
   return <Redirect to={{ pathname: "/blog" }} />;
 };
 
@@ -15,9 +15,8 @@ const SectionsDecorator = () => {
     <div className="sections-decorator">
       <Switch>
         <Route path="/blog" component={Blog} />
-        <PrivateRoute path="/myArticles" component={ArticlesContainer} />
         <PrivateRoute path="/profile" component={MyProfile} />
-        <Route component={TestComponent} />
+        <Route component={RedirectComponent} />
       </Switch>
     </div>
   );

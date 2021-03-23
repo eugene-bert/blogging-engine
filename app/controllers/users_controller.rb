@@ -22,7 +22,6 @@ class UsersController < ApplicationController
       @payload = { user_name: @user.user_name, id: @user.id }
       token = JsonWebToken.encode(@payload)
 
-      logger.info(JsonWebToken.decode(token))
       render json: { token: token }
     else
       @payload = { user_name: params[:user_name], errors: @user.errors }
@@ -30,9 +29,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def token_info
-    @info = JsonWebToken.decode(params[:token])
+  def info
+    @user = User.find_by(id: JsonWebToken.decode(bearer_token)[:id])
 
-    render json: @info
+    if @user
+      render json: @user
+    else
+      render json: {error: 'error'}
+    end
   end
 end
