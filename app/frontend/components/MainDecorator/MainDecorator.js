@@ -96,7 +96,7 @@ const MainDecorator = () => {
             {!state.isLoggedIn ? <LogInModal /> : <LogOutButton />}
           </Menu>
         </Sider>
-        <Layout>
+        <Layout className="main-decorator__body">
           <Content style={{ margin: "24px 16px 0" }}>
             <div
               className="site-layout-background"

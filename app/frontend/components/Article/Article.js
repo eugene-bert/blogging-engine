@@ -2,8 +2,8 @@ import React from "react";
 import { Divider } from "antd";
 import { Comment } from "antd";
 import ArticleModal from "../ArticleModal/ArticleModal";
-import './Article.scss';
 import moment from "moment";
+import './Article.scss';
 
 const Article = ({ article, isAdmin }) => {
 

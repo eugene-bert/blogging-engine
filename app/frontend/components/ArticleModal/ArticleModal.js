@@ -49,8 +49,8 @@ const ArticleModal = ({ className, article, isAdmin }) => {
             )}
           </Fragment>
         }
-        centered
         visible={visible}
+        style={{ top: 100 }}
         onOk={() => setVisible(false)}
         onCancel={() => {
           setVisible(false);
