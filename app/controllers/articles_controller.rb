@@ -23,7 +23,7 @@ class ArticlesController < ApplicationController
       render json: @article
     else
       @payload = { object: @article, errors: @article.errors }
-      render json: @payload, status: 200
+      render json: @payload, status: :method_not_allowed
     end
   end
 

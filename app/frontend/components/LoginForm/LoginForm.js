@@ -79,7 +79,7 @@ const LoginForm = () => {
           },
         ]}
       >
-        <Input />
+        <Input placeholder="Please input your username" />
       </Form.Item>
 
       <Form.Item
@@ -92,10 +92,32 @@ const LoginForm = () => {
           },
         ]}
       >
-        <Input.Password />
+        <Input.Password placeholder="Please input your password here" />
       </Form.Item>
       {!loginForm && (
         <Fragment>
+          <Form.Item
+              name="confirm"
+              label="Confirm Password"
+              dependencies={['password']}
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: 'Please confirm your password!',
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                  },
+                }),
+              ]}
+          >
+            <Input.Password placeholder="Please confirm your password here" />
+          </Form.Item>
           <Form.Item
             label="First name"
             name="first_name"
@@ -106,7 +128,7 @@ const LoginForm = () => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Please input your first name" />
           </Form.Item>
           <Form.Item
             label="Last name"
@@ -119,7 +141,7 @@ const LoginForm = () => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Please input your last name" />
           </Form.Item>
         </Fragment>
       )}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, Form, Button, Col, Row, Input } from "antd";
+import { Drawer, Form, Button, Col, Row, Input, message } from "antd";
 import { useApplicationContext } from "../../application.context";
 import api from "./../../api";
 
@@ -43,6 +43,7 @@ export const CreateArticle = () => {
                     form.resetFields();
                     setOpen(false);
                     if (data.status === 200) {
+                      message.success("Article was created");
                       api.getArticles().then((data) => {
                         dispatch({
                           type: "SET_ALL_ARTICLES",

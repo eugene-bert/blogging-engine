@@ -20,7 +20,7 @@ function makePostRequest(url, params) {
       authorization: `Bearer ${token}`,
     },
   }).catch(err => {
-    console.log(err.message)
+    message.error(err.message)
   });
 }
 
@@ -31,7 +31,7 @@ function makeGetRequest(url, id) {
       authorization: `Bearer ${token}`,
     },
   }).catch(err => {
-    console.log(err.message)
+    message.error(err.message)
   });
 }
 
@@ -42,7 +42,7 @@ function makeDeleteRequest(url, id) {
       authorization: `Bearer ${token}`,
     },
   }).catch(err => {
-    console.log(err.message)
+    message.error(err.message)
   });
 }
 
@@ -64,7 +64,7 @@ function makePutRequest(url, params, id) {
       authorization: `Bearer ${token}`,
     },
   }).catch(err => {
-    console.log(err.message)
+    message.error(err.message)
   });
 }
 

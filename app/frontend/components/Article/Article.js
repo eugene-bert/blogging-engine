@@ -3,6 +3,7 @@ import { Divider } from "antd";
 import { Comment } from "antd";
 import ArticleModal from "../ArticleModal/ArticleModal";
 import './Article.scss';
+import moment from "moment";
 
 const Article = ({ article, isAdmin }) => {
 
@@ -13,10 +14,11 @@ const Article = ({ article, isAdmin }) => {
     className={`article ${isAdmin ? 'article__admin' : ''}`}
     content={
         <>
-            <Divider orientation="left" plain>
+            <Divider orientation="center" plain>
                 <h3 className="article-title">{article.title}</h3>
             </Divider>
             <p>{article.body.slice(0, 300)}{article.body.length >= 300 && '...'}</p>
+            <p className="article-date">{moment(article.created_at).fromNow()}</p>
         </>
     }
     />
