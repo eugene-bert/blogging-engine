@@ -19,9 +19,12 @@ end
 
 
 Article.populate 10000 do |a|
+  time_range = 0.seconds.from_now..5.hours.from_now
   a.title = Faker::Book.title
   a.body = Faker::Lorem.paragraph_by_chars(number: 400)
   a.user_id = rand(1..10)
   a.is_private = false
   a.is_archived = false
+  a.created_at = time_range
+  a.updated_at = time_range
 end
