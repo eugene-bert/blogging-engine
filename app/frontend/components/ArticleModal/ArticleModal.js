@@ -1,10 +1,11 @@
 import React, { Fragment } from "react";
-import { Modal, Button, Input } from "antd";
+import { Modal, Button, Input, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import uuid from "react-uuid";
 import api from "../../api";
 import { useApplicationContext } from "../../application.context";
 import "./ArticleModal.scss";
+import moment from "moment";
 
 const ArticleModal = ({ className, article, isAdmin }) => {
   const { state, dispatch } = useApplicationContext();
@@ -68,16 +69,17 @@ const ArticleModal = ({ className, article, isAdmin }) => {
                   <Fragment>
                     <Button
                       onClick={() => {
-                          api.deleteArticle(article.id).then(data => {
-                              if (data.status === 200) {
-                                  api.getArticles().then((data) => {
-                                      dispatch({
-                                          type: "SET_ALL_ARTICLES",
-                                          payload: data.data,
-                                      });
-                                  });
-                              }
-                          })
+                        api.deleteArticle(article.id).then((data) => {
+                          if (data.status === 200) {
+                            message.success("Article was removed");
+                            api.getArticles().then((data) => {
+                              dispatch({
+                                type: "SET_ALL_ARTICLES",
+                                payload: data.data,
+                              });
+                            });
+                          }
+                        });
                       }}
                     >
                       <DeleteOutlined />
@@ -93,6 +95,7 @@ const ArticleModal = ({ className, article, isAdmin }) => {
                           })
                           .then((data) => {
                             if (data.status === 200) {
+                              message.success("Article was changed");
                               api.getArticles().then((data) => {
                                 dispatch({
                                   type: "SET_ALL_ARTICLES",
@@ -122,6 +125,7 @@ const ArticleModal = ({ className, article, isAdmin }) => {
         width={1000}
       >
         {!editMode && article.body}
+        <p className="article-date">{moment(article.created_at).fromNow()}</p>
         {editMode && (
           <Input.TextArea
             defaultValue={article.body}

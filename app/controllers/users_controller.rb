@@ -25,7 +25,7 @@ class UsersController < ApplicationController
       render json: { token: token }
     else
       @payload = { user_name: params[:user_name], errors: @user.errors }
-      render json: @payload
+      render json: @payload, status: :internal_server_error
     end
   end
 
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     if @user
       render json: @user
     else
-      render json: {error: 'error'}
+      render status: :internal_server_error
     end
   end
 end

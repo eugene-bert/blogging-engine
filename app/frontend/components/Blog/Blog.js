@@ -2,7 +2,6 @@ import React from "react";
 import uuid from "react-uuid";
 import {useApplicationContext} from "../../application.context";
 import Article from "../Article/Article";
-import { Typography} from "antd";
 
 
 const Blog = () => {
