@@ -1,8 +1,18 @@
 .main-decorator {
+  max-width: 1400px;
+  margin: 0 auto;
+
+  &__body {
+    min-height: 100vh !important;
+    margin-left: 250px;
+  }
+
   section {
-    height: 100vh;
+    height: 100%;
 
     aside {
+      position: fixed;
+      height: 100%;
       width: 250px !important;
       max-width: 250px !important;
       min-width: 250px !important;
@@ -10,6 +20,7 @@
 
       .login-button {
         position: absolute;
+        margin-top: 30px;
         left: 25%;
         width: 50%;
       }
@@ -22,9 +33,7 @@
     margin-bottom: 25px;
   }
   .ant-layout {
-    max-height: 100vh;
     background: #fff3e0;
-    overflow: auto;
   }
   .ant-layout-content {
     margin: 80px !important;
@@ -68,6 +77,7 @@
         font-size: 33px;
         background: none;
         border: none;
+        border-radius: 15px;
 
         &:hover {
           background: rgba(0, 0, 0, 0.5);
