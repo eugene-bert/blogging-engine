@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Blog from "../Blog/Blog";
-import ArticlesContainer from "../ArticlesContainer/ArticlesContainer";
+import MyArticlesContainer from "../MyArticlesContainer/MyArticlesContainer";
 import MyProfile from "../MyProfile/MyProfile";
 import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
 import "./SectionsDecorator.scss";
@@ -16,6 +16,7 @@ const SectionsDecorator = () => {
       <Switch>
         <Route path="/blog" component={Blog} />
         <PrivateRoute path="/profile" component={MyProfile} />
+        <PrivateRoute path="/myArticles" component={MyArticlesContainer} />
         <Route component={RedirectComponent} />
       </Switch>
     </div>

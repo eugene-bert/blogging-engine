@@ -1,14 +1,16 @@
 import React from "react";
 import { Divider } from "antd";
-import { Comment, Avatar } from "antd";
+import { Comment } from "antd";
 import ArticleModal from "../ArticleModal/ArticleModal";
 import './Article.scss';
 
-const Article = ({ article }) => {
+const Article = ({ article, isAdmin }) => {
+
   return (
     <Comment
-    actions={[<ArticleModal article={article} className="article-view" />]}
+    actions={[<ArticleModal isAdmin={isAdmin} article={article} className="article-view" />]}
     author={<a className="article-author">{article.first_name} {article.last_name}</a>}
+    className={`article ${isAdmin ? 'article__admin' : ''}`}
     content={
         <>
             <Divider orientation="left" plain>
