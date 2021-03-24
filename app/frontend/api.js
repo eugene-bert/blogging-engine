@@ -1,4 +1,6 @@
 import axios from "axios";
+import { message } from 'antd';
+
 
 export const getToken = () => {
   return localStorage.getItem("token");
@@ -17,6 +19,8 @@ function makePostRequest(url, params) {
     headers: {
       authorization: `Bearer ${token}`,
     },
+  }).catch(err => {
+    console.log(err.message)
   });
 }
 
@@ -26,6 +30,8 @@ function makeGetRequest(url, id) {
     headers: {
       authorization: `Bearer ${token}`,
     },
+  }).catch(err => {
+    console.log(err.message)
   });
 }
 
@@ -35,6 +41,8 @@ function makeDeleteRequest(url, id) {
     headers: {
       authorization: `Bearer ${token}`,
     },
+  }).catch(err => {
+    console.log(err.message)
   });
 }
 
@@ -44,6 +52,8 @@ function makePatchRequest(url, params, id) {
     headers: {
       authorization: `Bearer ${token}`,
     },
+  }).catch(err => {
+    console.log(err.message)
   });
 }
 
@@ -53,6 +63,8 @@ function makePutRequest(url, params, id) {
     headers: {
       authorization: `Bearer ${token}`,
     },
+  }).catch(err => {
+    console.log(err.message)
   });
 }
 

@@ -1,0 +1,14 @@
+.my-profile {
+  background: rgba(235, 186, 185, 0.5) ;
+  padding: 50px;
+  border-radius: 15px;
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+
+    button {
+      margin: 0 5px;
+    }
+  }
+}

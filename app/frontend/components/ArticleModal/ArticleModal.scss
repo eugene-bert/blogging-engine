@@ -1,0 +1,9 @@
+.article-modal {
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__title-input {
+    width: 95% !important;
+  }
+}

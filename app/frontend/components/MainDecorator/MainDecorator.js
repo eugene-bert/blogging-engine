@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Layout, Menu, Button } from "antd";
+import { Layout, Menu, Button} from "antd";
 import { BookOutlined, UserOutlined, HddOutlined } from "@ant-design/icons";
 import { useApplicationContext } from "../../application.context";
 import { CreateArticle } from "../CreateArticle/CreateArticle";
@@ -86,13 +86,16 @@ const MainDecorator = () => {
                 <CreateArticle />
               </div>
             )}
+            <Menu.Item key="1" icon={<BookOutlined />}>
+              <Link to="/blog">Blog</Link>
+            </Menu.Item>
             {state.isLoggedIn && (
               <Fragment>
-                <Menu.Item key="1" icon={<BookOutlined />}>
-                  <Link to="/blog">Blog</Link>
-                </Menu.Item>
                 <Menu.Item isSelected={true} key="2" icon={<UserOutlined />}>
                   <Link to="/profile">Profile</Link>
+                </Menu.Item>
+                <Menu.Item isSelected={true} key="3" icon={<HddOutlined />}>
+                  <Link to="/myArticles">My articles</Link>
                 </Menu.Item>
               </Fragment>
             )}

@@ -12,7 +12,7 @@ const Blog = () => {
         <div className="blog">
             {state.articles.map(article => {
                 return (
-                    <Article key={uuid()} article={article} />
+                    <Article isAdmin={state.userInfo.id === article.user_id} key={uuid()} article={article} />
                 )
             })}
 

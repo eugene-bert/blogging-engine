@@ -1,4 +1,9 @@
 .article {
+  padding: 0 20px;
+  margin: 10px 0;
+  border-radius: 15px;
+  background-color: rgba(197, 199, 199, 0.5) !important;
+
   &-author {
     font-size: 16px;
     font-weight: bold;
@@ -9,5 +14,8 @@
   }
   &-view {
     font-size: 14px;
+  }
+  &__admin {
+    background-color: rgba(235, 186, 185, 0.5) !important;
   }
 }

@@ -42,9 +42,14 @@ export const CreateArticle = () => {
                   .then((data) => {
                     form.resetFields();
                     setOpen(false);
-                    api.getPrivateArticles().then((data) => {
-                      dispatch({ type: "SET_ARTICLES", payload: data.data });
-                    });
+                    if (data.status === 200) {
+                      api.getArticles().then((data) => {
+                        dispatch({
+                          type: "SET_ALL_ARTICLES",
+                          payload: data.data,
+                        });
+                      });
+                    }
                   });
               }}
               type="primary"
