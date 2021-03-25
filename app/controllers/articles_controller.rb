@@ -31,6 +31,8 @@ class ArticlesController < ApplicationController
     @articles = Article.order(created_at: :desc).joins(:user)
                        .select('articles.*', 'users.user_name',
                                'users.first_name', 'users.last_name')
+                       .where(is_archived: false)
+
     render json: @articles, status: 200
   end
 
@@ -38,6 +40,7 @@ class ArticlesController < ApplicationController
     @article = Article.joins(:user)
                       .select('articles.*', 'users.user_name',
                               'users.first_name', 'users.last_name')
+                      .where(is_archived: false)
                       .find_by_id(params[:id])
     if @article
       render json: @article, status: 200
