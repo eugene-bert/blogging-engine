@@ -1,4 +1,4 @@
-env :PATH, ENV['PATH']
+# env :PATH, ENV['PATH']
 set :output, "log/cron_log.log"
 set :runner_command, "rails runner"
 # Use this file to easily define all of your cron jobs.
@@ -22,7 +22,10 @@ set :runner_command, "rails runner"
 #
 #
 # end
+#
+#
 
+set :job_template, "bash -l -c 'PATH=#{ENV['PATH']} && :job'"
 set :environment, 'development'
 
 every 1.minute do
